@@ -19,6 +19,6 @@ void resetMainMenuFlag();
 int inputChoice();
 //menu declaration
 int mainMenu();
-
+int convMenu();
 
 #endif

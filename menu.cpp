@@ -27,7 +27,7 @@ void greet()
 }
 void printMenu(string menu[],int length)
 {
-    cout<<"\n\t\t\t\tMake your choice !!\n";
+   // cout<<"\n\t\t\t\tMake your choice !!\n";
     for(int i=0;i<length;i++)
     {
         cout<<"("<<(i+1)<<")"<<menu[i]<<endl;
@@ -69,6 +69,7 @@ int mainMenu()
     while(1)
     {
         greet();
+        cout<<"\n--------[Main Menu]--------\n\n"<<endl;
         printMenu(menu,sizeof(menu)/sizeof(menu[0]));
         choice=inputChoice();
         switch(choice)
@@ -76,10 +77,45 @@ int mainMenu()
             case 1: {
                     resetChoice();
                     updateCurrPage("main/convert/");
-                    //dummy call to convert fn
+                    convMenu();
                     break;
                     }
             case 2: return 0;
+            default:    resetChoice();
+                        cout<<"Please enter a valid input !!"<<endl;
+                        sleep(2);
+                     
+        }
+    }
+    return 0;
+}
+int convMenu()
+{
+   resetChoice();
+   updateCurrPage("main/convert/");
+   string menu[]={"Video","Audio","Back","Exit"};
+    while(1)
+    {   
+        cls();
+        cout<<"--------[Convert Menu]-------\n\n"<<endl;
+        printMenu(menu,sizeof(menu)/sizeof(menu[0]));
+        choice=inputChoice();
+        switch(choice)
+        {
+            case 1: {
+                    resetChoice();
+                    updateCurrPage("main/convert/Video/");
+                    //dummy call to convert video fn
+                    break;
+                    }
+            case 2: {
+                    resetChoice();
+                    updateCurrPage("main/convert/Audio/");
+                    //dummy call to convert video fn
+                    break;
+                    }
+            case 3: return 0;
+            case 4: exit(0);
             default:    resetChoice();
                         cout<<"Please enter a valid input !!"<<endl;
                         sleep(2);
