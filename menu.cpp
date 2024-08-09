@@ -64,7 +64,7 @@ void updateCurrPage(string page)
 void greet()
 {
     system("clear");
-    system("echo \"$(<greet.me)\"");
+    system("./intro.sh");
 }
 void printMenu(string menu[],int length)
 {

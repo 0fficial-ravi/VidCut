@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
+    system("chmod +x intro.sh");
     mainMenu();
     return 0;
 }
