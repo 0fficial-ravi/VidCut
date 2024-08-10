@@ -37,4 +37,5 @@ int convAud();
 
 //Formats for Audio/Video
 int audioFormat(int);
+int videoFormat();
 #endif

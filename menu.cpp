@@ -187,7 +187,7 @@ int convVid()
             case 2: {
                     resetChoice();
                     updateCurrPage("main/convert/Video_Video/");
-                    //dummy call to convert video->video (other format) fn
+                    videoFormat();
                     break;
                     }
             case 3: return 0;
@@ -257,16 +257,16 @@ int audioFormat(int flag)
         switch(choice)
         {
             case 1:
-                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+" -vn "+destLoc+"\""+outFileName+"."+menu[0]+"\"";
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+" -vn "+destLoc+"\""+outFileName+"."+menu[0]+"\""+" -hide_banner";
                     break;
             case 2: 
-                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -c:a flac "+destLoc+"\""+outFileName+"."+menu[1]+"\"";
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -c:a flac "+destLoc+"\""+outFileName+"."+menu[1]+"\""+" -hide_banner";
                     break;
             case 3:
-                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -acodec pcm_s16le "+destLoc+"\""+outFileName+"."+menu[2]+"\"";
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -acodec pcm_s16le "+destLoc+"\""+outFileName+"."+menu[2]+"\""+" -hide_banner";
                     break;
             case 4:
-                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -acodec libvorbis "+destLoc+"\""+outFileName+"."+menu[3]+"\"";
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vn -acodec libvorbis "+destLoc+"\""+outFileName+"."+menu[3]+"\""+" -hide_banner";
                     break;
                    
             case 5: return 0;
@@ -298,3 +298,61 @@ int audioFormat(int flag)
     return 0; 
 }
 
+int videoFormat()
+{
+   int status=0;
+   resetChoice();
+   //updateCurrPage("main/convert/Audio/");
+   string menu[]={"mp4","mkv","webm","avi","Back","Exit"};
+   string command="";
+    while(1)
+    {   
+        cls();
+        cout<<"--------[Convert Video->Video (Other Format) Menu]-------\n\n"<<endl;
+        printMenu(menu,sizeof(menu)/sizeof(menu[0]));
+        choice=inputChoice();
+        if(choice!=5 && choice!=6)
+        getLocations();
+        switch(choice)
+        {
+            case 1:
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+" -c copy "+destLoc+"\""+outFileName+"."+menu[0]+"\""+" -hide_banner";
+                    break;
+            case 2: 
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vcodec copy -acodec copy "+destLoc+"\""+outFileName+"."+menu[1]+"\""+" -hide_banner";
+                    break;
+            case 3:
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis "+destLoc+"\""+outFileName+"."+menu[2]+"\""+" -hide_banner";
+                    break;
+            case 4:
+                    command="ffmpeg -i "+targetFileLoc+"\""+targetFileName+"\""+ " -vcodec copy -acodec copy "+destLoc+"\""+outFileName+"."+menu[3]+"\""+" -hide_banner";
+                    break;
+                   
+            case 5: return 0;
+
+            case 6: exit(1);
+
+            default:   
+                        resetChoice();
+                        cout<<"Please enter a valid input !!"<<endl;
+                        sleep(2);
+        }
+
+                    resetChoice();
+                    //cout<<"\nExecuting :$"<<command<<endl;
+                    //sleep(20);
+                    status=system(command.c_str());
+                    if(status==0)
+                    {
+                        cls();
+                        cout<<"\n\n\n\t\t\t\tFile convertion Successful Yay!! (:"<<endl;
+                        sleep(3);
+                    }
+                    else{
+                        cls();
+                        cout<<"\n\n\n\t\t\t\tFile Conversion Failed (T_T) "<<endl;
+                        sleep(3);
+                    }
+    }
+    return 0; 
+}
